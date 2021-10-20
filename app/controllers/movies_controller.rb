@@ -12,7 +12,7 @@ class MoviesController < ApplicationController
     if params[:ratings].nil?
       @ratings_to_show = []
     else
-      params[:ratings]
+      @ratings_to_show = params[:ratings]
     end
   end
 
