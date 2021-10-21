@@ -17,9 +17,13 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th class = "hilite text-dark">Movie Title</th>
+      <th class = "<%=@title_class%>">
+        <%= link_to "Movie Title", movie_path(:sort=>"title",:ratings=>@ratings_show) %>
+      </th>
       <th>Rating</th>
-      <th>Release Date</th>
+      <th class = "<%=@release_class%>">
+      <%= link_to "Release Date", movie_path(:sort=>"release_date",:ratings=>@ratings_show) %>
+      </th>
       <th>More Info</th>
     </tr>
   </thead>
