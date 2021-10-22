@@ -8,7 +8,7 @@ class MoviesController < ApplicationController
 
   def index
     @sort = params[:sort]
-    @ratings_show = params[ratings_show]
+    @ratings_show = params[:ratings_show]
     @all_ratings = Movie.all_ratings
     if params[:home].nil?
       @ratings_show = session[:ratings_show]
