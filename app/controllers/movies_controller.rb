@@ -7,33 +7,36 @@ class MoviesController < ApplicationController
   end
 
   def index
-    if !params[:sort].nil?
-      @sort = params[:sort]
-    end
+    @sort = params[:sort]
+    @ratings_show = params[ratings_show]
     @all_ratings = Movie.all_ratings
-    if params[:ratings].nil? && params[:ratings_show].nil?
+    if params[:home].nil?
+      @ratings_show = session[:ratings_show]
+      @sort = session[:sort]
+    end
+    if params[:ratings].nil? && @ratings_show.nil?
       @ratings_show= []
       @ratings_to_show = []
       if @sort.nil?
         @movies = Movie.all
       else
-        @movies = Movie.all.order(params[:sort])
+        @movies = Movie.all.order(@sort)
       end
     else
-      if params[:ratings_show].nil?
+      if @ratings_show.nil?
         @ratings_show= params[:ratings]
         @ratings_to_show = @ratings_show.keys
         if @sort.nil?
           @movies = Movie.with_ratings(@ratings_to_show)
         else
-          @movies = Movie.with_ratings(@ratings_to_show).order(params[:sort])
+          @movies = Movie.with_ratings(@ratings_to_show).order(@sort)
         end
       else
         @ratings_to_show = @ratings_show.keys
         if @sort.nil?
           @movies = Movie.with_ratings(@ratings_to_show)
         else
-          @movies = Movie.with_ratings(@ratings_to_show).order(params[:sort])
+          @movies = Movie.with_ratings(@ratings_to_show).order(@sort)
         end
       end
     end
@@ -47,6 +50,8 @@ class MoviesController < ApplicationController
           @title_class = ''
           @release_class = ''
         end
+    session[:sort] = @sort
+    session[:ratings_show] = @ratings_show
   end
 
   def new
